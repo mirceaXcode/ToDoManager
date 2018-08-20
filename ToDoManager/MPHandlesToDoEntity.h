@@ -7,9 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ToDoEntity+CoreDataClass.h"
 
 @protocol MPHandlesToDoEntity <NSObject>
 
-- (void) receiveToDoEntity:(NSManagedObjectContext * ) incomingToDoEntity;
+- (void) receiveToDoEntity:(ToDoEntity * ) incomingToDoEntity;
 
 @end

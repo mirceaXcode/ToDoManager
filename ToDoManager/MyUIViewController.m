@@ -11,6 +11,7 @@
 @interface MyUIViewController ()
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (strong, nonatomic) ToDoEntity *localToDoEntity;
 
 @end
 
@@ -42,4 +43,9 @@
     
 }
 
+- (void) receiveToDoEntity:(ToDoEntity * ) incomingToDoEntity{
+    
+    _localToDoEntity = incomingToDoEntity;
+    
+}
 @end

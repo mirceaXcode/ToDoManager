@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "MPHandlesMOC.h"
+#import "MPHandlesToDoEntity.h"
 
-@interface MyUIViewController : UIViewController <MPHandlesMOC>
+@interface MyUIViewController : UIViewController <MPHandlesMOC,MPHandlesToDoEntity>
 
 - (void) receiveMOC:(NSManagedObjectContext *)incomingMOC;
+
+- (void) receiveToDoEntity:(ToDoEntity * ) incomingToDoEntity;
 
 @end
