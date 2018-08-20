@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "MPHandlesMOC.h"
 
 @interface AppDelegate ()
 
@@ -16,7 +17,10 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    
+    id<MPHandlesMOC> child = (id<MPHandlesMOC>) _window.rootViewController;
+    [child receiveMOC:_persistentContainer.viewContext];
+    
     return YES;
 }
 

@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  MyUITableViewCell.h
 //  ToDoManager
 //
 //  Created by Mircea Popescu on 8/20/18.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface MyUITableViewCell : UITableViewCell
 
 @end
-
