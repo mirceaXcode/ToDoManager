@@ -18,6 +18,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    [self persistentContainer];
+    
     id<MPHandlesMOC> child = (id<MPHandlesMOC>) _window.rootViewController;
     [child receiveMOC:_persistentContainer.viewContext];
     

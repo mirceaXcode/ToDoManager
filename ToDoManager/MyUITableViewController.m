@@ -22,7 +22,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //[self initialiseNSFetchedResultsControllerDelegate];
+    [self initialiseNSFetchedResultsControllerDelegate];
     
 }
 
@@ -50,11 +50,12 @@
 
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
-    id<MPHandlesMOC> child = (id<MPHandlesMOC>)[segue destinationViewController];
-    [child receiveMOC:_managedObjectContext];
+        
+        id<MPHandlesMOC> child = (id<MPHandlesMOC>)[segue destinationViewController];
+        [child receiveMOC:_managedObjectContext];
+
 }
 
 - (void) receiveMOC:(NSManagedObjectContext *)incomingMOC{
@@ -67,24 +68,24 @@
 #pragma mark - NSFetchedResultsControllerDelegate
 
 -(void) initialiseNSFetchedResultsControllerDelegate {
-    
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    
-    fetchRequest.entity = [NSEntityDescription entityForName:@"ToDoEntity" inManagedObjectContext:_managedObjectContext];
-    
-    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"TRUEPREDICATE"];
-    
-    fetchRequest.sortDescriptors = @[[[NSSortDescriptor alloc] initWithKey:@"toDoTitle" ascending:YES]];
-    
-    _resultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:_managedObjectContext sectionNameKeyPath:nil cacheName:nil];
-    _resultsController.delegate = self;
-    
-    NSError *err;
-    BOOL fetchSucceeded = [_resultsController performFetch:&err];
-    if(!fetchSucceeded){
-        @throw [NSException exceptionWithName:NSGenericException reason:@"Could't fetch!" userInfo:@{NSUnderlyingErrorKey:err}];
-    }
-    
+        
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        
+        fetchRequest.entity = [NSEntityDescription entityForName:@"ToDoEntity" inManagedObjectContext:_managedObjectContext];
+        
+        fetchRequest.predicate = [NSPredicate predicateWithFormat:@"TRUEPREDICATE"];
+        
+        fetchRequest.sortDescriptors = @[[[NSSortDescriptor alloc] initWithKey:@"toDoTitle" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
+        
+        _resultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:_managedObjectContext sectionNameKeyPath:nil cacheName:nil];
+        _resultsController.delegate = self;
+        
+        NSError *err;
+        BOOL fetchSucceeded = [_resultsController performFetch:&err];
+        if(!fetchSucceeded){
+            @throw [NSException exceptionWithName:NSGenericException reason:@"Could't fetch!" userInfo:@{NSUnderlyingErrorKey:err}];
+        }
+        
 }
 
 -(void) controllerWillChangeContent:(NSFetchedResultsController *)controller{
