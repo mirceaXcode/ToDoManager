@@ -26,7 +26,25 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+}
+
+-(void) viewWillAppear:(BOOL)animated{
+    
+    // Setup delete state
+    _wasDeleted = false;
+    
+    // Setup Form
+    _titleField.text = _localToDoEntity.toDoTitle;
+    _detailsField.text = _localToDoEntity.toDoDetails;
+    NSDate *dueDate = _localToDoEntity.toDoDueDate;
+    if(dueDate != nil){
+        [_dueDateField setDate:dueDate];
+        
+    }
+    
+    // Detect edit ends of Text Views by Notification
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textViewDidEndEditing:) name:UITextViewTextDidEndEditingNotification object:self];
+    
 }
 
 - (void) saveMyToDoEntity{
@@ -39,15 +57,6 @@
     }
     
 }
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 -(void) textViewDidEndEditing:(NSNotification *) notification{
     
@@ -56,52 +65,6 @@
         _localToDoEntity.toDoDetails = _detailsField.text;
         [self saveMyToDoEntity];
     }
-    
-}
-
--(void) viewWillAppear:(BOOL)animated{
-    
-    // Setup delete state
-    _wasDeleted = false;
-    
-    // Setup Form
-    _titleField.text = _localToDoEntity.toDoTitle;
-    _detailsField.text = _localToDoEntity.toDoDetails;
-    
-    NSDate *dueDate = _localToDoEntity.toDoDueDate;
-    if(dueDate != nil){
-        [_dueDateField setDate:dueDate];
-    }
-    
-    // Detect edit ends
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textViewDidEndEditing:) name:UITextViewTextDidEndEditingNotification object:self];
-    
-}
-
--(void)viewWillDisappear:(BOOL)animated{
-    
-    if(_wasDeleted == false){
-    
-    // Save everything before leaving the screen
-    // Don't want to save anything when the item was deleted
-        
-    _localToDoEntity.toDoTitle = _titleField.text;
-    _localToDoEntity.toDoDetails = _detailsField.text;
-    _localToDoEntity.toDoDueDate = _dueDateField.date;
-     [self saveMyToDoEntity];
-        
-    }
-    // Remove Detection
-      [[NSNotificationCenter defaultCenter] removeObserver:self  name:UITextViewTextDidEndEditingNotification object:self];
-    
-}
-
-- (IBAction)trashTapped:(id)sender {
-    
-    _wasDeleted = true;
-    [_managedObjectContext deleteObject:_localToDoEntity];
-    [self saveMyToDoEntity];
-    [self.navigationController popToRootViewControllerAnimated:YES];
     
 }
 
@@ -119,6 +82,32 @@
     
 }
 
+- (IBAction)trashTapped:(id)sender {
+    
+    _wasDeleted = true;
+    [_managedObjectContext deleteObject:_localToDoEntity];
+    [self saveMyToDoEntity];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    
+    if(_wasDeleted == false){
+        
+        // Save everything before leaving the screen
+        // Don't want to save anything when the item was deleted
+        
+        _localToDoEntity.toDoTitle = _titleField.text;
+        _localToDoEntity.toDoDetails = _detailsField.text;
+        _localToDoEntity.toDoDueDate = _dueDateField.date;
+        [self saveMyToDoEntity];
+        
+    }
+    // Remove Detection
+    [[NSNotificationCenter defaultCenter] removeObserver:self  name:UITextViewTextDidEndEditingNotification object:self];
+    
+}
 
 - (void) receiveMOC:(NSManagedObjectContext *)incomingMOC{
     
