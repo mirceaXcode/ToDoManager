@@ -54,6 +54,7 @@
                                 <connections>
                                     <outlet property="toDoDueDateLabel" destination="ohw-dp-hXb" id="Hni-tG-Zvr"/>
                                     <outlet property="toDoTitleLabel" destination="v1H-ZD-X51" id="yJv-BI-v5o"/>
+                                    <segue destination="Z9T-k4-sIs" kind="show" id="DnM-DY-9Xf"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -137,7 +138,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="tIk-0G-dpG"/>
                     </view>
-                    <navigationItem key="navigationItem" title="To Do" id="G7Q-vP-YOP"/>
+                    <navigationItem key="navigationItem" title="To Do" id="G7Q-vP-YOP">
+                        <barButtonItem key="rightBarButtonItem" systemItem="trash" id="eCU-JW-ge8">
+                            <connections>
+                                <action selector="trashTapped:" destination="Z9T-k4-sIs" id="Kj3-HE-52F"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="detailsField" destination="mFU-f8-BQF" id="eMx-sp-mSc"/>
                         <outlet property="dueDateField" destination="zmT-nZ-esY" id="0h0-b6-F2u"/>
@@ -165,4 +172,7 @@
             <point key="canvasLocation" x="-703" y="47"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="DnM-DY-9Xf"/>
+    </inferredMetricsTieBreakers>
 </document>

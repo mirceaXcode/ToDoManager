@@ -58,10 +58,17 @@
     id<MPHandlesMOC,MPHandlesToDoEntity> child = (id<MPHandlesMOC,MPHandlesToDoEntity>)[segue destinationViewController];
         [child receiveMOC:_managedObjectContext];
     
-    ToDoEntity *item = [NSEntityDescription insertNewObjectForEntityForName:@"ToDoEntity" inManagedObjectContext:_managedObjectContext];
+    ToDoEntity *item;
+    // If you press on the + button, it will create a new entity and pass it to the View Controler, if you press a table cell, it will pull out the entity associated with that cell and pass the information to the Vew Controller.
+    if([sender isMemberOfClass:[UIBarButtonItem class]]){
+        item = [NSEntityDescription insertNewObjectForEntityForName:@"ToDoEntity" inManagedObjectContext:_managedObjectContext];
+    }
+    else {
+        MyUITableViewCell *source = (MyUITableViewCell *) sender;
+        item = source.localToDoEntity;
+    }
+    // Initializing the View Controller with the value of the new or the passing the value of the existing entity from above.
     [child receiveToDoEntity:item];
-    
-    
 
 }
 

@@ -12,9 +12,12 @@
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) ToDoEntity *localToDoEntity;
+
 @property (weak, nonatomic) IBOutlet UITextField *titleField;
 @property (weak, nonatomic) IBOutlet UITextView *detailsField;
 @property (weak, nonatomic) IBOutlet UIDatePicker *dueDateField;
+
+@property(nonatomic,assign) BOOL wasDeleted;
 
 
 @end
@@ -58,6 +61,9 @@
 
 -(void) viewWillAppear:(BOOL)animated{
     
+    // Setup delete state
+    _wasDeleted = false;
+    
     // Setup Form
     _titleField.text = _localToDoEntity.toDoTitle;
     _detailsField.text = _localToDoEntity.toDoDetails;
@@ -74,14 +80,28 @@
 
 -(void)viewWillDisappear:(BOOL)animated{
     
-    // Save everything;
+    if(_wasDeleted == false){
+    
+    // Save everything before leaving the screen
+    // Don't want to save anything when the item was deleted
+        
     _localToDoEntity.toDoTitle = _titleField.text;
     _localToDoEntity.toDoDetails = _detailsField.text;
     _localToDoEntity.toDoDueDate = _dueDateField.date;
      [self saveMyToDoEntity];
-    
+        
+    }
     // Remove Detection
       [[NSNotificationCenter defaultCenter] removeObserver:self  name:UITextViewTextDidEndEditingNotification object:self];
+    
+}
+
+- (IBAction)trashTapped:(id)sender {
+    
+    _wasDeleted = true;
+    [_managedObjectContext deleteObject:_localToDoEntity];
+    [self saveMyToDoEntity];
+    [self.navigationController popToRootViewControllerAnimated:YES];
     
 }
 
