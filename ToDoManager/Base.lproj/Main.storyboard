@@ -29,20 +29,20 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v1H-ZD-X51">
-                                            <rect key="frame" x="0.0" y="11" width="270" height="21"/>
+                                            <rect key="frame" x="0.0" y="11" width="212.5" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ohw-dp-hXb">
-                                            <rect key="frame" x="278" y="11" width="81" height="21"/>
+                                            <rect key="frame" x="220.5" y="11" width="138.5" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="ohw-dp-hXb" firstAttribute="width" secondItem="v1H-ZD-X51" secondAttribute="width" multiplier="0.3" id="LgD-z4-nYr"/>
+                                        <constraint firstItem="ohw-dp-hXb" firstAttribute="width" secondItem="v1H-ZD-X51" secondAttribute="width" multiplier="0.65" id="LgD-z4-nYr"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="ohw-dp-hXb" secondAttribute="trailing" id="Ptr-8D-Ay2"/>
                                         <constraint firstItem="ohw-dp-hXb" firstAttribute="centerY" secondItem="E1s-f0-lrY" secondAttribute="centerY" id="StA-cJ-nLW"/>
                                         <constraint firstItem="ohw-dp-hXb" firstAttribute="trailing" secondItem="E1s-f0-lrY" secondAttribute="trailingMargin" id="Xqe-8z-c5w"/>
@@ -103,6 +103,9 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="titleFieldEdited:" destination="Z9T-k4-sIs" eventType="editingDidEnd" id="ELF-zg-Oxj"/>
+                                </connections>
                             </textField>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="mFU-f8-BQF">
                                 <rect key="frame" x="16" y="213" width="343" height="200"/>
@@ -119,6 +122,9 @@
                                 <date key="date" timeIntervalSinceReferenceDate="556478114.61181295">
                                     <!--2018-08-20 17:15:14 +0000-->
                                 </date>
+                                <connections>
+                                    <action selector="dueDateEdited:" destination="Z9T-k4-sIs" eventType="editingDidEnd" id="m6m-ZF-HIc"/>
+                                </connections>
                             </datePicker>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Due Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LS0-6d-WlV">
                                 <rect key="frame" x="16" y="451" width="81" height="24"/>
@@ -132,6 +138,11 @@
                         <viewLayoutGuide key="safeArea" id="tIk-0G-dpG"/>
                     </view>
                     <navigationItem key="navigationItem" title="To Do" id="G7Q-vP-YOP"/>
+                    <connections>
+                        <outlet property="detailsField" destination="mFU-f8-BQF" id="eMx-sp-mSc"/>
+                        <outlet property="dueDateField" destination="zmT-nZ-esY" id="0h0-b6-F2u"/>
+                        <outlet property="titleField" destination="sWR-G9-pJK" id="oem-t8-Fsf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n9C-7n-WcT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

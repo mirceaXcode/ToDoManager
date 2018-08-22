@@ -10,7 +10,7 @@
 
 @protocol MPHandlesMOC <NSObject>
 
-- (void) receiveMOC:(NSManagedObjectContext * ) incomingMOC;
+- (void) receiveMOC:(NSManagedObjectContext *) incomingMOC;
 
 
 @end

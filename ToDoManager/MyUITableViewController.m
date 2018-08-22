@@ -9,6 +9,7 @@
 #import "MyUITableViewController.h"
 #import <CoreData/CoreData.h>
 #import "MyUITableViewCell.h"
+#import "MPHandlesToDoEntity.h"
 
 @interface MyUITableViewController () <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate>
 
@@ -53,8 +54,14 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
         
-        id<MPHandlesMOC> child = (id<MPHandlesMOC>)[segue destinationViewController];
+    // Using the Controler we created, we are passing our managedObjectContext down to our segue, destinationViewController is MyUIViewControler
+    id<MPHandlesMOC,MPHandlesToDoEntity> child = (id<MPHandlesMOC,MPHandlesToDoEntity>)[segue destinationViewController];
         [child receiveMOC:_managedObjectContext];
+    
+    ToDoEntity *item = [NSEntityDescription insertNewObjectForEntityForName:@"ToDoEntity" inManagedObjectContext:_managedObjectContext];
+    [child receiveToDoEntity:item];
+    
+    
 
 }
 
