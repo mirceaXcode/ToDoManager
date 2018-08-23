@@ -39,6 +39,7 @@
 - (void) receiveMOC:(NSManagedObjectContext *)incomingMOC{
     
     _managedObjectContext = incomingMOC;
+    // Passed down to the child(TableViewControler in our case) the ManagedObjectContext
     id<MPHandlesMOC> child = (id<MPHandlesMOC>) self.viewControllers[0];
     [child receiveMOC:_managedObjectContext];
     

@@ -20,6 +20,7 @@
     
     [self persistentContainer];
     
+    // Pass down the ManagedObjectContext down to the view hierarchy
     id<MPHandlesMOC> child = (id<MPHandlesMOC>) _window.rootViewController;
     [child receiveMOC:_persistentContainer.viewContext];
     
