@@ -17,6 +17,7 @@
 
 @property (strong, nonatomic) NSFetchedResultsController *resultsController;
 
+
 @end
 
 @implementation MyUITableViewController
@@ -49,7 +50,25 @@
     return cell;
 }
 
+// in order to enable to edit the tableView, in my case, I want to swipe delete
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+    return YES;
+}
+
+// implement swipe delete function
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    
+    if(editingStyle == UITableViewCellEditingStyleDelete){
+        // Delete the row from the data source
+        
+        id object = [_resultsController objectAtIndexPath:indexPath];
+        [_managedObjectContext deleteObject:object];
+        
+    }
+}
 #pragma mark - NSFetchedResultsControllerDelegate
+// To support automatic updates to our table view, we will use a fetched results controller. A fetched results controller is an object that can manage a fetch request with a big number of items and is the perfect Core Data companion to a table view
 
 -(void) initialiseNSFetchedResultsControllerDelegate {
     
@@ -73,6 +92,8 @@
     
 }
 
+// Listening to changes. NSFetchedResultsController will listen and implement any changes to the table view, like delete, changes, moves
+
 -(void) controllerWillChangeContent:(NSFetchedResultsController *)controller{
     [self.tableView beginUpdates];
 }
@@ -89,6 +110,7 @@
         case NSFetchedResultsChangeDelete:
             [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
                                   withRowAnimation:UITableViewRowAnimationFade];
+
             break;
             
         case NSFetchedResultsChangeUpdate:{
@@ -136,6 +158,17 @@
 - (void) receiveMOC:(NSManagedObjectContext *)incomingMOC{
     
     _managedObjectContext = incomingMOC;
+    
+}
+
+- (void) saveMyToDoEntity{
+    
+    NSError *error;
+    BOOL saveSuccess = [_managedObjectContext save:&error];
+    
+    if (!saveSuccess){
+        @throw [NSException exceptionWithName:NSGenericException reason:@"Could't save!" userInfo:@{NSUnderlyingErrorKey:error}];
+    }
     
 }
 
