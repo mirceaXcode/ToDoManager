@@ -50,6 +50,14 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row % 2) {
+        cell.backgroundColor = [UIColor yellowColor];
+    } else {
+        cell.backgroundColor = [UIColor cyanColor];
+    }
+}
+
 // in order to enable to edit the tableView, in my case, I want to swipe delete
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
     return YES;
@@ -60,11 +68,11 @@
     
     
     if(editingStyle == UITableViewCellEditingStyleDelete){
-        // Delete the row from the data source
         
+        // Delete the row from the data source
         id object = [_resultsController objectAtIndexPath:indexPath];
         [_managedObjectContext deleteObject:object];
-        
+
     }
 }
 #pragma mark - NSFetchedResultsControllerDelegate
